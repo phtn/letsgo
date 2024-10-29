@@ -15,6 +15,7 @@ DEFAULT_CONFIG := "package config\n\n import (\n\t\"fmt\"\n)\n\ntype Config stru
 DEFAULT_API := "package api"
 
 letgo :: proc(project: string) -> (ok: bool) {
+	using os
 
 	// start_time := time.Millisecond
 	rootDir := os.get_current_directory()
@@ -24,7 +25,7 @@ letgo :: proc(project: string) -> (ok: bool) {
 		return false
 	}
 
-	if os.is_dir(project) {
+	if is_dir(project) {
 		fmt.printf("directory with %s already exists.\n", project)
 		return false
 	}
@@ -49,6 +50,14 @@ letgo :: proc(project: string) -> (ok: bool) {
 	// Create go.mod
 	go_mod_content := fmt.tprintf("module %s\n", project)
 	os.write_entire_file("go.mod", transmute([]byte)go_mod_content)
+
+	// Mekefile
+	makefile := fmt.tprintf(
+		"run:\n\tgo run cmd/%s/main.go\nb:\n\tgo build ./build\ntidy:\n\tgo mod tidy\nfiber:\n\tgo get github.com/gofiber/fiber/v2",
+		project,
+	)
+	os.write_entire_file("Makefile", transmute([]byte)makefile)
+
 
 	// Create empty config.go
 	os.write_entire_file("config/config.go", transmute([]byte)DEFAULT_CONFIG)
@@ -86,7 +95,6 @@ letgo :: proc(project: string) -> (ok: bool) {
 	fmt.print("done.")
 	// fmt.printf(elapsed)
 	fmt.println("")
-
 
 	return true
 }
