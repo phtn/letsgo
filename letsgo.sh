@@ -1,7 +1,7 @@
 #!/bin/zsh
 echo "\nre-up.ph cli\n"
 DEFAULT_ENTRY_CONTENT="package main\n\nimport (\n\t\"fmt\"\n)\n\nfunc main() {\n\tfmt.PrintLn(\"Let's fucking go!\")\n}"
-letgo () {
+
 
     if [ $# -ne 1 ]; then
         echo "letgo <project_name>"

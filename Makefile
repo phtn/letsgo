@@ -1,4 +1,8 @@
-run:
-	odin run letgo.odin -file
+r:
+	odin run letsgo.odin -file
 b:
-	odin build letgo.odin -out=build/letsgo -file
+	@odin build letsgo.odin -out=build/letsgo -file
+	    ./build/letsgo $(n)
+
+c:
+	cp ./build/letsgo /usr/local/bin/letsgo
